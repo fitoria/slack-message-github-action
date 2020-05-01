@@ -54,6 +54,19 @@ function generateSlackMessage(text) {
                         "value": `<${commitURL}|${commitURL.split('/').pop()}>`,
                         "short": true
                     }
+                ],
+                "actions": [ 
+                    {
+                       "type": "button",
+                       "text": "Actions tab", 
+                       "url": "http://example.com" 
+                    },
+                    {
+                       "type": "button",
+                       "text": "Re run",
+                       "style": "danger",
+                       "url": "http://example.com/order/1/cancel"
+                    }                
                 ]
             }
         ]
