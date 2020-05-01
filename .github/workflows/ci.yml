@@ -7,23 +7,14 @@ on:
       - master 
 
 jobs:
-  check_pr:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: npm install
-      - run: npm run all
+      - uses: actions/checkout@master
+
+      - uses: raulanatol/slack-message-github-action@v1.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          
-      - uses: actions/upload-artifact@master
-        with:
-          name: webpack artifacts
-          path: dist/
+          WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+          SLACK_CHANNEL: ${{secrets.SLACK_NOTIFICATION_CHANNEL}}
+          MESSAGE: Compilation ends
+          STATUS: ${{job.status}}
